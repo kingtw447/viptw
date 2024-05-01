@@ -1,0 +1,395 @@
+::============================================================================
+::
+::   This script is a part of 'Microsoft_Activation_Scripts' (MAS) project.
+::
+::   Homepage: mass grave[.]dev
+::      Email: windowsaddict@protonmail.com
+::
+::============================================================================
+
+
+
+::  To activate, run the script with "/HWID" parameter or change 0 to 1 in below line
+set _act=0
+
+::  To disable changing edition if current edition doesn't support HWID activation, change the value to 1 from 0 or run the script with "/HWID-NoEditionChange" parameter
+set _NoEditionChange=0
+
+::  If value is changed in above lines or parameter is used then script will run in unattended mode
+
+
+
+::========================================================================================================================================
+
+::  Set Path variable, it helps if it is misconfigured in the system
+
+set "PATH=%SystemRoot%\System32;%SystemRoot%\System32\wbem;%SystemRoot%\System32\WindowsPowerShell\v1.0\"
+if exist "%SystemRoot%\Sysnative\reg.exe" (
+set "PATH=%SystemRoot%\Sysnative;%SystemRoot%\Sysnative\wbem;%SystemRoot%\Sysnative\WindowsPowerShell\v1.0\;%PATH%"
+)
+
+:: Re-launch the script with x64 process if it was initiated by x86 process on x64 bit Windows
+:: or with ARM64 process if it was initiated by x86/ARM32 process on ARM64 Windows
+
+set "_cmdf=%~f0"
+for %%# in (%*) do (
+if /i "%%#"=="r1" set r1=1
+if /i "%%#"=="r2" set r2=1
+if /i "%%#"=="-qedit" (
+reg add HKCU\Console /v QuickEdit /t REG_DWORD /d "1" /f 1>nul
+rem check the code below admin elevation to understand why it's here
+)
+)
+
+if exist %SystemRoot%\Sysnative\cmd.exe if not defined r1 (
+setlocal EnableDelayedExpansion
+start %SystemRoot%\Sysnative\cmd.exe /c ""!_cmdf!" %* r1"
+exit /b
+)
+
+:: Re-launch the script with ARM32 process if it was initiated by x64 process on ARM64 Windows
+
+if exist %SystemRoot%\SysArm32\cmd.exe if %PROCESSOR_ARCHITECTURE%==AMD64 if not defined r2 (
+setlocal EnableDelayedExpansion
+start %SystemRoot%\SysArm32\cmd.exe /c ""!_cmdf!" %* r2"
+exit /b
+)
+
+::========================================================================================================================================
+
+set "blank="
+set "mas=ht%blank%tps%blank%://mass%blank%grave.dev/"
+
+::  Check if Null service is working, it's important for the batch script
+
+sc query Null | find /i "RUNNING"
+if %errorlevel% NEQ 0 (
+echo:
+echo Null service is not running, script may crash...
+echo:
+echo:
+echo 幫助 - %mas%troubleshoot.html
+echo:
+echo:
+ping 127.0.0.1 -n 10
+)
+cls
+
+::  Check LF line ending
+
+pushd "%~dp0"
+>nul findstr /v "$" "%~nx0" && (
+echo:
+echo Error: Script either has LF line ending issue or an empty line at the end of the script is missing.
+echo:
+ping 127.0.0.1 -n 6 >nul
+popd
+exit /b
+)
+popd
+
+::========================================================================================================================================
+
+cls
+color 07
+title  HWID Activation %masver%
+
+set _args=
+set _elev=
+set _unattended=0
+
+set _args=%*
+if defined _args set _args=%_args:"=%
+if defined _args (
+for %%A in (%_args%) do (
+if /i "%%A"=="/HWID"                  set _act=1
+if /i "%%A"=="/HWID-NoEditionChange"  set _NoEditionChange=1
+if /i "%%A"=="-el"                    set _elev=1
+)
+)
+
+for %%A in (%_act% %_NoEditionChange%) do (if "%%A"=="1" set _unattended=1)
+
+::========================================================================================================================================
+
+set "nul1=1>nul"
+set "nul2=2>nul"
+set "nul6=2^>nul"
+set "nul=>nul 2>&1"
+
+set psc=powershell.exe
+set winbuild=1
+for /f "tokens=6 delims=[]. " %%G in ('ver') do set winbuild=%%G
+
+set _NCS=1
+if %winbuild% LSS 10586 set _NCS=0
+if %winbuild% GEQ 10586 reg query "HKCU\Console" /v ForceV2 %nul2% | find /i "0x0" %nul1% && (set _NCS=0)
+
+if %_NCS% EQU 1 (
+for /F %%a in ('echo prompt $E ^| cmd') do set "esc=%%a"
+set     "Red="41;97m""
+set    "Gray="100;97m""
+set   "Green="42;97m""
+set    "Blue="44;97m""
+set  "_White="40;37m""
+set  "_Green="40;92m""
+set "_Yellow="40;93m""
+) else (
+set     "Red="Red" "white""
+set    "Gray="Darkgray" "white""
+set   "Green="DarkGreen" "white""
+set    "Blue="Blue" "white""
+set  "_White="Black" "Gray""
+set  "_Green="Black" "Green""
+set "_Yellow="Black" "Yellow""
+)
+
+set "nceline=echo: &echo ==== ERROR ==== &echo:"
+set "eline=echo: &call :dk_color %Red% "==== ERROR ====" &echo:"
+if %~z0 GEQ 200000 (
+set "_exitmsg=Go back"
+set "_fixmsg=Go back to Main Menu, select Troubleshoot and run Fix Licensing option."
+) else (
+set "_exitmsg=退出"
+set "_fixmsg=In MAS folder, run Troubleshoot script and select Fix Licensing option."
+)
+
+::========================================================================================================================================
+
+if %winbuild% LSS 10240 (
+%eline%
+echo Unsupported OS version detected [%winbuild%].
+echo HWID Activation is supported only for Windows 10/11.
+echo Use Online KMS Activation option.
+goto dk_done
+)
+
+if exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-Server*Edition~*.mum" (
+%eline%
+echo HWID Activation is not supported for Windows Server.
+echo Use KMS38 or Online KMS Activation option.
+goto dk_done
+)
+
+for %%# in (powershell.exe) do @if "%%~$PATH:#"=="" (
+%nceline%
+echo Unable to find powershell.exe in the system.
+goto dk_done
+)
+
+::========================================================================================================================================
+
+::  Fix for the special characters limitation in path name
+
+set "_work=%~dp0"
+if "%_work:~-1%"=="\" set "_work=%_work:~0,-1%"
+
+set "_batf=%~f0"
+set "_batp=%_batf:'=''%"
+
+set _PSarg="""%~f0""" -el %_args%
+
+set "_ttemp=%userprofile%\AppData\Local\Temp"
+
+setlocal EnableDelayedExpansion
+
+::========================================================================================================================================
+
+echo "!_batf!" | find /i "!_ttemp!" %nul1% && (
+if /i not "!_work!"=="!_ttemp!" (
+%eline%
+echo Script is launched from the temp folder,
+echo Most likely you are running the script directly from the archive file.
+echo:
+echo Extract the archive file and launch the script from the extracted folder.
+goto dk_done
+)
+)
+
+::========================================================================================================================================
+
+::  Elevate script as admin and pass arguments and preventing loop
+
+%nul1% fltmc || (
+if not defined _elev %psc% "start cmd.exe -arg '/c \"!_PSarg:'=''!\"' -verb runas" && exit /b
+%eline%
+echo This script requires admin privileges.
+echo To do so, right click on this script and select 'Run as administrator'.
+goto dk_done
+)
+
+::========================================================================================================================================
+
+::  This code disables QuickEdit for this cmd.exe session only without making permanent changes to the registry
+::  It is added because clicking on the script window pauses the operation and leads to the confusion that script stopped due to an error
+
+if %_unattended%==1 set quedit=1
+for %%# in (%_args%) do (if /i "%%#"=="-qedit" set quedit=1)
+
+reg query HKCU\Console /v QuickEdit %nul2% | find /i "0x0" %nul1% || if not defined quedit (
+reg add HKCU\Console /v QuickEdit /t REG_DWORD /d "0" /f %nul1%
+start cmd.exe /c ""!_batf!" %_args% -qedit"
+rem quickedit reset code is added at the starting of the script instead of here because it takes time to reflect in some cases
+exit /b
+)
+
+::========================================================================================================================================
+
+::  Check for updates
+
+set -=
+set old=
+
+for /f "delims=[] tokens=2" %%# in ('ping -4 -n 1 updatecheck.mass%-%grave.dev') do (
+if not [%%#]==[] (echo "%%#" | find "127.69" %nul1% && (echo "%%#" | find "127.69.%masver%" %nul1% || set old=1))
+)
+
+if defined old (
+echo ________________________________________________
+%eline%
+echo You are running outdated version MAS %masver%
+echo ________________________________________________
+echo:
+if not %_unattended%==1 (
+echo [1] Get Latest MAS
+echo [0] Continue Anyway
+echo:
+call :dk_color %_Green% "Enter a menu option in the Keyboard [1,0] :"
+choice /C:10 /N
+if !errorlevel!==2 rem
+if !errorlevel!==1 (start ht%-%tps://github.com/mass%-%gravel/Microsoft-Acti%-%vation-Scripts & start %mas% & exit /b)
+)
+)
+
+::========================================================================================================================================
+
+cls
+mode 110, 34
+if exist "%Systemdrive%\Windows\System32\spp\store_test\" mode 134, 34
+title  HWID Activation %masver%
+
+echo:
+echo Initializing...
+
+::  Check PowerShell
+
+%psc% $ExecutionContext.SessionState.LanguageMode %nul2% | find /i "Full" %nul1% || (
+%eline%
+%psc% $ExecutionContext.SessionState.LanguageMode
+echo:
+echo PowerShell is not working. Aborting...
+echo If you have applied restrictions on Powershell then undo those changes.
+echo:
+echo Check this page for help. %mas%troubleshoot
+goto dk_done
+)
+
+::========================================================================================================================================
+
+call :dk_product
+call :dk_ckeckwmic
+
+::  Show info for potential script stuck scenario
+
+sc start sppsvc %nul%
+if %errorlevel% NEQ 1056 if %errorlevel% NEQ 0 (
+echo:
+echo Error code: %errorlevel%
+call :dk_color %Red% "Failed to start [sppsvc] service, rest of the process may take a long time..."
+echo:
+)
+
+::========================================================================================================================================
+
+::  檢查系統是否永久啟用
+
+call :dk_checkperm
+if defined _perm (
+cls
+echo ___________________________________________________________________________________________
+echo:
+call :dk_color2 %_White% "     " %Green% "檢查: %winos% 已永久啟用."
+call :dk_color2 %_White% "     " %Gray% "不需要啟用."
+echo ___________________________________________________________________________________________
+if %_unattended%==1 goto dk_done
+echo:
+choice /C:10 /N /M ">    [1] 啟用 [0] %_exitmsg% : "
+if errorlevel 2 exit /b
+)
+cls
+
+::========================================================================================================================================
+
+::  Check Evaluation version
+
+if exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-*EvalEdition~*.mum" (
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionID %nul2% | find /i "Eval" %nul1% && (
+%eline%
+echo [%winos% ^| %winbuild%]
+echo:
+echo Evaluation Editions cannot be activated. 
+echo You need to install full version of %winos%
+echo:
+echo Download it from here,
+echo %mas%genuine-installation-media.html
+goto dk_done
+)
+)
+
+::========================================================================================================================================
+
+call :dk_checksku
+
+if not defined osSKU (
+%eline%
+echo SKU value was not detected properly. Aborting...
+goto dk_done
+)
+
+::========================================================================================================================================
+
+set error=
+
+cls
+echo:
+for /f "skip=2 tokens=2*" %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\Session Manager\Environment" /v PROCESSOR_ARCHITECTURE') do set arch=%%b
+for /f "tokens=6-7 delims=[]. " %%i in ('ver') do if "%%j"=="" (set fullbuild=%%i) else (set fullbuild=%%i.%%j)
+echo 檢查作業系統資訊                        [%winos% ^| %fullbuild% ^| %arch%]
+
+::  檢查網路連線
+
+set _int=
+for %%a in (l.root-servers.net resolver1.opendns.com download.windowsupdate.com google.com) do if not defined _int (
+for /f "delims=[] tokens=2" %%# in ('ping -n 1 %%a') do (if not [%%#]==[] set _int=1)
+)
+
+if not defined _int (
+%psc% "If([Activator]::CreateInstance([Type]::GetTypeFromCLSID([Guid]'{DCB00C01-570F-4A9B-8D69-199FDBA5723B}')).IsConnectedToInternet){Exit 0}Else{Exit 1}"
+if !errorlevel!==0 (set _int=1&set ping_f= But Ping Failed)
+)
+
+if defined _int (
+echo 檢查網路連線            [連接的]
+) else (
+set error=1
+call :dk_color %Red% "檢查網路連線            [未連接]"
+)
+
+::========================================================================================================================================
+
+::  Check Windows Script Host
+
+set _WSH=1
+reg query "HKCU\SOFTWARE\Microsoft\Windows Script Host\Settings" /v Enabled %nul2% | find /i "0x0" %nul1% && (set _WSH=0)
+reg query "HKLM\SOFTWARE\Microsoft\Windows Script Host\Settings" /v Enabled %nul2% | find /i "0x0" %nul1% && (set _WSH=0)
+
+if %_WSH% EQU 0 (
+reg add "HKLM\Software\Microsoft\Windows Script Host\Settings" /v Enabled /t REG_DWORD /d 1 /f %nul%
+reg add "HKCU\Software\Microsoft\Windows Script Host\Settings" /v Enabled /t REG_DWORD /d 1 /f %nul%
+if not "%arch%"=="x86" reg add "HKLM\Software\Microsoft\Windows Script Host\Settings" /v Enabled /t REG_DWORD /d 1 /f /reg:32 %nul%
+echo Enabling Windows Script Host            [Successful]
+)
+
+::========================================================================================================================================
+
+echo 啟用診斷測試...

@@ -1,0 +1,560 @@
+copy /y /b "%tdir%\GenuineTicket" "%tdir%\GenuineTicket.xml" %nul%
+clipup -v -o
+
+set rebuildinfo=
+
+if not exist %ProgramData%\Microsoft\Windows\ClipSVC\tokens.dat (
+set error=1
+set rebuildinfo=1
+call :dk_color %Red% "Checking ClipSVC tokens.dat             [Not Found]"
+)
+
+%_xmlexist% (
+set error=1
+set rebuildinfo=1
+call :dk_color %Red% "Installing GenuineTicket.xml            [Failed With clipup -v -o]"
+)
+
+if exist "%ProgramData%\Microsoft\Windows\ClipSVC\Install\Migration\*.xml" (
+set error=1
+set rebuildinfo=1
+call :dk_color %Red% "Checking Ticket Migration               [Failed]"
+)
+
+if defined applist if not defined showfix if defined rebuildinfo (
+set showfix=1
+call :dk_color %Blue% "%_fixmsg%"
+)
+
+if exist "%tdir%\Genuine*" del /f /q "%tdir%\Genuine*" %nul%
+
+::==========================================================================================================================================
+
+call :dk_product
+
+echo:
+echo 啟用設定...
+
+call :dk_act
+call :dk_checkperm
+if defined _perm (
+echo:
+call :dk_color %Green% "%winos% 使用數位許可證永久啟用."
+goto :dl_final
+)
+
+::==========================================================================================================================================
+
+::  Extended licensing servers tests incase error not found and activation failed
+
+set resfail=
+if not defined error (
+
+ipconfig /flushdns %nul%
+set "tls=$Tls12 = [Enum]::ToObject([System.Net.SecurityProtocolType], 3072); [System.Net.ServicePointManager]::SecurityProtocol = $Tls12;"
+
+for %%# in (
+login.live.com/ppsecure/deviceaddcredential.srf
+purchase.mp.microsoft.com/v7.0/users/me/orders
+) do if not defined resfail (
+set "d1=Add-Type -AssemblyName System.Net.Http;"
+set "d1=!d1! $client = [System.Net.Http.HttpClient]::new();"
+set "d1=!d1! $response = $client.GetAsync('https://%%#').GetAwaiter().GetResult();"
+set "d1=!d1! $response.Content.ReadAsStringAsync().GetAwaiter().GetResult()"
+%psc% "!tls! !d1!" %nul2% | findstr /i "PurchaseFD DeviceAddResponse" %nul1% || set resfail=1
+)
+
+if not defined resfail (
+%psc% "!tls! irm https://licensing.mp.microsoft.com/v7.0/licenses/content -Method POST" | find /i "traceId" %nul1% || set resfail=1
+)
+
+if defined resfail (
+set error=1
+echo:
+call :dk_color %Red% "Checking Licensing Servers              [Failed To Connect]"
+call :dk_color2 %Blue% "Check this page for help" %_Yellow% " %mas%licensing-servers-issue"
+)
+)
+
+::==========================================================================================================================================
+
+::  Clear store ID related registry to fix activation incase error not found
+
+if not defined error (
+echo:
+set "_ident=HKU\S-1-5-19\SOFTWARE\Microsoft\IdentityCRL"
+reg delete "!_ident!" /f %nul%
+reg query "!_ident!" %nul% && (
+call :dk_color %Red% "Deleting a Registry                     [Failed] [!_ident!]"
+) || (
+echo Deleting a Registry                     [Successful] [!_ident!]
+)
+
+REM Refresh some services and license status
+
+for %%# in (wlidsvc LicenseManager sppsvc) do (%psc% Restart-Service %%# %nul%)
+call :dk_refresh
+call :dk_act
+call :dk_checkperm
+)
+
+REM Check Internet related error codes
+
+if not defined error if not defined _perm (
+echo "%error_code%" | findstr /i "0x80072e 0x80072f 0x800704cf" %nul% && (
+set error=1
+echo:
+call :dk_color %Red% "Checking Internet Issues                [Found] %error_code%"
+call :dk_color2 %Blue% "Check this page for help" %_Yellow% " %mas%licensing-servers-issue"
+)
+)
+
+::==========================================================================================================================================
+
+echo:
+if defined _perm (
+call :dk_color %Green% "%winos% is permanently activated with a digital license."
+) else (
+call :dk_color %Red% "Activation Failed %error_code%"
+if defined notworking (
+call :dk_color %Blue% "At the time of writing this, HWID Activation was not supported for this product."
+call :dk_color %Blue% "Use KMS38 Activation option."
+) else (
+if not defined error call :dk_color %Blue% "%_fixmsg%"
+call :dk_color2 %Blue% "Check this page for help" %_Yellow% " %mas%troubleshoot"
+)
+)
+
+::========================================================================================================================================
+
+:dl_final
+
+echo:
+
+if defined regionchange (
+%psc% "Set-WinHomeLocation -GeoId %nation%" %nul%
+if !errorlevel! EQU 0 (
+echo 恢復視窗區域                [成功的]
+) else (
+call :dk_color %Red% "恢復視窗區域                [失敗的] [%name% - %nation%]"
+)
+)
+
+if %osSKU%==175 call :dk_color %Red% "%winos% does not support activation on non-azure platforms."
+
+goto :dk_done
+
+::========================================================================================================================================
+
+::  Check SKU value
+
+:dk_checksku
+
+set osSKU=
+set slcSKU=
+set wmiSKU=
+set regSKU=
+
+if %winbuild% GEQ 14393 (set info=Kernel-BrandingInfo) else (set info=Kernel-ProductInfo)
+set d1=%ref% [void]$TypeBuilder.DefinePInvokeMethod('SLGetWindowsInformationDWORD', 'slc.dll', 'Public, Static', 1, [int], @([String], [int].MakeByRefType()), 1, 3);
+set d1=%d1% $Sku = 0; [void]$TypeBuilder.CreateType()::SLGetWindowsInformationDWORD('%info%', [ref]$Sku); $Sku
+for /f "delims=" %%s in ('"%psc% %d1%"') do if not errorlevel 1 (set slcSKU=%%s)
+if "%slcSKU%"=="0" set slcSKU=
+if 1%slcSKU% NEQ +1%slcSKU% set slcSKU=
+
+for /f "tokens=3 delims=." %%a in ('reg query "HKLM\SYSTEM\CurrentControlSet\Control\ProductOptions" /v OSProductPfn %nul6%') do set "regSKU=%%a"
+if %_wmic% EQU 1 for /f "tokens=2 delims==" %%a in ('"wmic Path Win32_OperatingSystem Get OperatingSystemSKU /format:LIST" %nul6%') do if not errorlevel 1 set "wmiSKU=%%a"
+if %_wmic% EQU 0 for /f "tokens=1" %%a in ('%psc% "([WMI]'Win32_OperatingSystem=@').OperatingSystemSKU" %nul6%') do if not errorlevel 1 set "wmiSKU=%%a"
+
+set osSKU=%slcSKU%
+if not defined osSKU set osSKU=%wmiSKU%
+if not defined osSKU set osSKU=%regSKU%
+exit /b
+
+::  Get Windows permanent activation status
+
+:dk_checkperm
+
+if %_wmic% EQU 1 wmic path SoftwareLicensingProduct where (LicenseStatus='1' and GracePeriodRemaining='0' and PartialProductKey is not NULL) get Name /value %nul2% | findstr /i "Windows" %nul1% && set _perm=1||set _perm=
+if %_wmic% EQU 0 %psc% "(([WMISEARCHER]'SELECT Name FROM SoftwareLicensingProduct WHERE LicenseStatus=1 AND GracePeriodRemaining=0 AND PartialProductKey IS NOT NULL').Get()).Name | %% {echo ('Name='+$_)}" %nul2% | findstr /i "Windows" %nul1% && set _perm=1||set _perm=
+exit /b
+
+::  Refresh license status
+
+:dk_refresh
+
+if %_wmic% EQU 1 wmic path SoftwareLicensingService where __CLASS='SoftwareLicensingService' call RefreshLicenseStatus %nul%
+if %_wmic% EQU 0 %psc% "$null=(([WMICLASS]'SoftwareLicensingService').GetInstances()).RefreshLicenseStatus()" %nul%
+exit /b
+
+::  Activation command
+
+:dk_act
+
+set error_code=
+if %_wmic% EQU 1 wmic path SoftwareLicensingProduct where "ApplicationID='55c92734-d682-4d71-983e-d6ec3f16059f' and PartialProductKey<>null" call Activate %nul%
+if %_wmic% EQU 0 %psc% "(([WMISEARCHER]'SELECT ID FROM SoftwareLicensingProduct WHERE ApplicationID=''55c92734-d682-4d71-983e-d6ec3f16059f'' AND PartialProductKey IS NOT NULL').Get()).Activate()" %nul%
+if not %errorlevel%==0 cscript //nologo %windir%\system32\slmgr.vbs /ato %nul%
+set error_code=%errorlevel%
+cmd /c exit /b %error_code%
+if %error_code% NEQ 0 (set "error_code=[Error Code: 0x%=ExitCode%]") else (set error_code=)
+exit /b
+
+::  Get Windows Activation IDs
+
+:dk_actids
+
+set applist=
+if %_wmic% EQU 1 set "chkapp=for /f "tokens=2 delims==" %%a in ('"wmic path SoftwareLicensingProduct where (ApplicationID='55c92734-d682-4d71-983e-d6ec3f16059f') get ID /VALUE" %nul6%')"
+if %_wmic% EQU 0 set "chkapp=for /f "tokens=2 delims==" %%a in ('%psc% "(([WMISEARCHER]'SELECT ID FROM SoftwareLicensingProduct WHERE ApplicationID=''55c92734-d682-4d71-983e-d6ec3f16059f''').Get()).ID ^| %% {echo ('ID='+$_)}" %nul6%')"
+%chkapp% do (if defined applist (call set "applist=!applist! %%a") else (call set "applist=%%a"))
+exit /b
+
+::  Get Activation IDs from licensing files if not found through WMI
+
+:getactivationid:
+$folderPath = "$env:windir\System32\spp\tokens\skus"
+$files = Get-ChildItem -Path $folderPath -Recurse -Filter "*.xrm-ms"
+$guids = @()
+foreach ($file in $files) {
+    $content = Get-Content -Path $file.FullName -Raw
+    $matches = [regex]::Matches($content, 'name="productSkuId">\{([0-9a-fA-F\-]+)\}')
+    foreach ($match in $matches) {
+        $guids += $match.Groups[1].Value
+    }
+}
+$guids = $guids | Select-Object -Unique
+$guidsString = $guids -join " "
+$guidsString
+:getactivationid:
+
+::  Check wmic.exe
+
+:dk_ckeckwmic
+
+set _wmic=0
+for %%# in (wmic.exe) do @if not "%%~$PATH:#"=="" (
+wmic path Win32_ComputerSystem get CreationClassName /value %nul2% | find /i "computersystem" %nul1% && set _wmic=1
+)
+exit /b
+
+::  Get Product name (WMI/REG methods are not reliable in all conditions, hence winbrand.dll method is used)
+
+:dk_product
+
+call :dk_reflection
+
+set d1=%ref% $meth = $TypeBuilder.DefinePInvokeMethod('BrandingFormatString', 'winbrand.dll', 'Public, Static', 1, [String], @([String]), 1, 3);
+set d1=%d1% $meth.SetImplementationFlags(128); $TypeBuilder.CreateType()::BrandingFormatString('%%WINDOWS_LONG%%')
+
+set winos=
+for /f "delims=" %%s in ('"%psc% %d1%"') do if not errorlevel 1 (set winos=%%s)
+echo "%winos%" | find /i "Windows" %nul1% || (
+for /f "skip=2 tokens=2*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v ProductName %nul6%') do set "winos=%%b"
+if %winbuild% GEQ 22000 (
+set winos=!winos:Windows 10=Windows 11!
+)
+)
+exit /b
+
+::  Common lines used in PowerShell reflection code
+
+:dk_reflection
+
+set ref=$AssemblyBuilder = [AppDomain]::CurrentDomain.DefineDynamicAssembly(4, 1);
+set ref=%ref% $ModuleBuilder = $AssemblyBuilder.DefineDynamicModule(2, $False);
+set ref=%ref% $TypeBuilder = $ModuleBuilder.DefineType(0);
+exit /b
+
+::========================================================================================================================================
+
+:dk_errorcheck
+
+set showfix=
+
+::  Check corrupt services
+
+set serv_cor=
+for %%# in (%_serv%) do (
+set _corrupt=
+sc start %%# %nul%
+if !errorlevel! EQU 1060 set _corrupt=1
+sc query %%# %nul% || set _corrupt=1
+for %%G in (DependOnService Description DisplayName ErrorControl ImagePath ObjectName Start Type) do if not defined _corrupt (
+reg query HKLM\SYSTEM\CurrentControlSet\Services\%%# /v %%G %nul% || set _corrupt=1
+if /i %%#==TrustedInstaller if /i %%G==DependOnService set _corrupt=
+)
+
+if defined _corrupt (if defined serv_cor (set "serv_cor=!serv_cor! %%#") else (set "serv_cor=%%#"))
+)
+
+if defined serv_cor (
+set error=1
+call :dk_color %Red% "Checking Corrupt Services               [%serv_cor%]"
+)
+
+::========================================================================================================================================
+
+::  Check disabled services
+
+set serv_ste=
+for %%# in (%_serv%) do (
+sc start %%# %nul%
+if !errorlevel! EQU 1058 (if defined serv_ste (set "serv_ste=!serv_ste! %%#") else (set "serv_ste=%%#"))
+)
+
+::  Change disabled services startup type to default
+
+set serv_csts=
+set serv_cste=
+
+if defined serv_ste (
+for %%# in (%serv_ste%) do (
+if /i %%#==ClipSVC          (reg add "HKLM\SYSTEM\CurrentControlSet\Services\%%#" /v "Start" /t REG_DWORD /d "3" /f %nul% & sc config %%# start= demand %nul%)
+if /i %%#==wlidsvc          sc config %%# start= demand %nul%
+if /i %%#==sppsvc           (reg add "HKLM\SYSTEM\CurrentControlSet\Services\%%#" /v "Start" /t REG_DWORD /d "2" /f %nul% & sc config %%# start= delayed-auto %nul%)
+if /i %%#==KeyIso           sc config %%# start= demand %nul%
+if /i %%#==LicenseManager   sc config %%# start= demand %nul%
+if /i %%#==Winmgmt          sc config %%# start= auto %nul%
+if /i %%#==DoSvc            sc config %%# start= delayed-auto %nul%
+if /i %%#==UsoSvc           sc config %%# start= delayed-auto %nul%
+if /i %%#==CryptSvc         sc config %%# start= auto %nul%
+if /i %%#==BITS             sc config %%# start= delayed-auto %nul%
+if /i %%#==wuauserv         sc config %%# start= demand %nul%
+if /i %%#==WaaSMedicSvc     sc config %%# start= demand %nul%
+if !errorlevel!==0 (
+if defined serv_csts (set "serv_csts=!serv_csts! %%#") else (set "serv_csts=%%#")
+) else (
+if defined serv_cste (set "serv_cste=!serv_cste! %%#") else (set "serv_cste=%%#")
+)
+)
+)
+
+if defined serv_csts call :dk_color %Gray% "Enabling Disabled Services              [Successful] [%serv_csts%]"
+
+if defined serv_cste (
+set error=1
+call :dk_color %Red% "Enabling Disabled Services              [Failed] [%serv_cste%]"
+)
+
+::========================================================================================================================================
+
+::  Check if the services are able to run or not
+::  Workarounds are added to get correct status and error code because sc query doesn't output correct results in some conditions
+
+set serv_e=
+for %%# in (%_serv%) do (
+set errorcode=
+set checkerror=
+
+sc query %%# | find /i "RUNNING" %nul% || (
+%psc% Start-Service %%# %nul%
+set errorcode=!errorlevel!
+sc query %%# | find /i "RUNNING" %nul% || set checkerror=1
+)
+
+sc start %%# %nul%
+if !errorlevel! NEQ 1056 if !errorlevel! NEQ 0 (set errorcode=!errorlevel!&set checkerror=1)
+if defined checkerror if defined serv_e (set "serv_e=!serv_e!, %%#-!errorcode!") else (set "serv_e=%%#-!errorcode!")
+)
+
+if defined serv_e (
+set error=1
+call :dk_color %Red% "Starting Services                       [Failed] [%serv_e%]"
+echo %serv_e% | findstr /i "ClipSVC-1058 sppsvc-1058" %nul% && (
+call :dk_color %Blue% "Restart the system to fix this error."
+set showfix=1
+)
+)
+
+::========================================================================================================================================
+
+::  Various error checks
+
+if defined safeboot_option (
+set error=1
+set showfix=1
+call :dk_color2 %Red% "Checking Boot Mode                      [%safeboot_option%] " %Blue% "[Safe mode found. Run in normal mode.]"
+)
+
+
+for /f "skip=2 tokens=2*" %%A in ('reg query "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Setup\State" /v ImageState') do (set imagestate=%%B)
+if /i not "%imagestate%"=="IMAGE_STATE_COMPLETE" (
+set error=1
+call :dk_color %Red% "Checking Windows Setup State            [%imagestate%]"
+echo "%imagestate%" | find /i "RESEAL" %nul% && (
+set showfix=1
+call :dk_color %Blue% "You need to run it in normal mode in case you are running it in Audit Mode."
+)
+)
+
+
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\WinPE" /v InstRoot %nul% && (
+set error=1
+set showfix=1
+call :dk_color2 %Red% "Checking WinPE                          " %Blue% "[WinPE mode found. Run in normal mode.]"
+)
+
+
+set wpainfo=
+set wpaerror=
+for /f "delims=" %%a in ('%psc% "$f=[io.file]::ReadAllText('!_batp!') -split ':wpatest\:.*';iex ($f[1]);" %nul6%') do (set wpainfo=%%a)
+echo "%wpainfo%" | find /i "Error Found" %nul% && (
+set error=1
+set wpaerror=1
+call :dk_color %Red% "Checking WPA Registry Error             [%wpainfo%]"
+) || (
+echo Checking WPA Registry Count             [%wpainfo%]
+)
+
+
+DISM /English /Online /Get-CurrentEdition %nul%
+set dism_error=%errorlevel%
+cmd /c exit /b %dism_error%
+if %dism_error% NEQ 0 set "dism_error=0x%=ExitCode%"
+if %dism_error% NEQ 0 (
+call :dk_color %Red% "Checking DISM                           [Not Responding] [%dism_error%]"
+)
+
+
+if not defined officeact if exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-*EvalEdition~*.mum" (
+set error=1
+set showfix=1
+call :dk_color %Red% "Checking Eval Packages                  [Non-Eval Licenses are installed in Eval Windows]"
+call :dk_color %Blue% "Evaluation Windows can not be activated and different License install may lead to errors."
+call :dk_color %Blue% "It is recommended to install full version of %winos%."
+call :dk_color %Blue% "You can download it from %mas%genuine-installation-media.html"
+)
+
+
+set osedition=
+for /f "skip=2 tokens=3" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion" /v EditionID %nul6%') do set "osedition=%%a"
+
+::  Workaround for an issue in builds between 1607 and 1709 where ProfessionalEducation is shown as Professional
+
+if "%osSKU%"=="164" set osedition=ProfessionalEducation
+if "%osSKU%"=="165" set osedition=ProfessionalEducationN
+
+if not defined officeact (
+if not defined osedition (
+call :dk_color %Red% "Checking Edition Name                   [Not Found In Registry]"
+) else (
+
+if not exist "%SystemRoot%\System32\spp\tokens\skus\%osedition%\%osedition%*.xrm-ms" (
+set error=1
+call :dk_color %Red% "Checking License Files                  [Not Found] [%osedition%]"
+)
+
+if not exist "%SystemRoot%\Servicing\Packages\Microsoft-Windows-*-%osedition%-*.mum" (
+set error=1
+call :dk_color %Red% "Checking Package File                   [Not Found] [%osedition%]"
+)
+)
+)
+
+
+cscript //nologo %windir%\system32\slmgr.vbs /dlv %nul%
+set error_code=%errorlevel%
+cmd /c exit /b %error_code%
+if %error_code% NEQ 0 set "error_code=0x%=ExitCode%"
+if %error_code% NEQ 0 (
+set error=1
+call :dk_color %Red% "Checking slmgr /dlv                     [Not Responding] %error_code%"
+)
+
+
+for %%# in (wmic.exe) do @if "%%~$PATH:#"=="" (
+call :dk_color %Gray% "Checking WMIC.exe                       [Not Found]"
+)
+
+
+set wmifailed=
+if %_wmic% EQU 1 wmic path Win32_ComputerSystem get CreationClassName /value %nul2% | find /i "computersystem" %nul1%
+if %_wmic% EQU 0 %psc% "Get-CIMInstance -Class Win32_ComputerSystem | Select-Object -Property CreationClassName" %nul2% | find /i "computersystem" %nul1%
+
+if %errorlevel% NEQ 0 set wmifailed=1
+echo "%error_code%" | findstr /i "0x800410 0x800440" %nul1% && set wmifailed=1& ::  https://learn.microsoft.com/en-us/windows/win32/wmisdk/wmi-error-constants
+if defined wmifailed (
+set error=1
+call :dk_color %Red% "Checking WMI                            [Not Responding]"
+call :dk_color %Blue% "In MAS, Goto Troubleshoot and run Fix WMI option."
+set showfix=1
+)
+
+
+%nul% set /a "sum=%slcSKU%+%regSKU%+%wmiSKU%"
+set /a "sum/=3"
+if not defined officeact if not "%sum%"=="%slcSKU%" (
+call :dk_color %Red% "Checking SLC/WMI/REG SKU                [Difference Found - SLC:%slcSKU% WMI:%wmiSKU% Reg:%regSKU%]"
+)
+
+
+reg query "HKU\S-1-5-20\Software\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform\PersistedTSReArmed" %nul% && (
+set error=1
+set showfix=1
+call :dk_color2 %Red% "Checking Rearm                          " %Blue% "[System Restart Is Required]"
+)
+
+
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\ClipSVC\Volatile\PersistedSystemState" %nul% && (
+set error=1
+set showfix=1
+call :dk_color2 %Red% "Checking ClipSVC                        " %Blue% "[System Restart Is Required]"
+)
+
+
+for /f "skip=2 tokens=2*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" /v "SkipRearm" %nul6%') do if /i %%b NEQ 0x0 (
+reg add "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" /v "SkipRearm" /t REG_DWORD /d "0" /f %nul%
+call :dk_color %Red% "Checking SkipRearm                      [Default 0 Value Not Found. Changing To 0]"
+%psc% Restart-Service sppsvc %nul%
+set error=1
+)
+
+
+reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform\Plugins\Objects\msft:rm/algorithm/hwid/4.0" /f ba02fed39662 /d %nul% || (
+call :dk_color %Red% "Checking SPP Registry Key               [Incorrect ModuleId Found]"
+call :dk_color %Blue% "Possibly Caused By Gaming Spoofers. Help: %mas%troubleshoot"
+set error=1
+set showfix=1
+)
+
+
+set tokenstore=
+for /f "skip=2 tokens=2*" %%a in ('reg query "HKLM\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform" /v TokenStore %nul6%') do call set "tokenstore=%%b"
+if not exist "%tokenstore%\" (
+set error=1
+REM This code creates token folder only if it's missing and sets default permission for it
+mkdir "%tokenstore%" %nul%
+set "d=$sddl = 'O:BAG:BAD:PAI(A;OICI;FA;;;SY)(A;OICI;FA;;;BA)(A;OICIIO;GR;;;BU)(A;;FR;;;BU)(A;OICI;FA;;;S-1-5-80-123231216-2592883651-3715271367-3753151631-4175906628)';"
+set "d=!d! $AclObject = New-Object System.Security.AccessControl.DirectorySecurity;"
+set "d=!d! $AclObject.SetSecurityDescriptorSddlForm($sddl);"
+set "d=!d! Set-Acl -Path %tokenstore% -AclObject $AclObject;"
+%psc% "!d!" %nul%
+call :dk_color %Gray% "Checking SPP Token Folder               [Not Found. Creating Now] [%tokenstore%\]"
+)
+
+
+call :dk_actids
+if not defined applist (
+%psc% Stop-Service sppsvc %nul%
+cscript //nologo %windir%\system32\slmgr.vbs /rilc %nul%
+if !errorlevel! NEQ 0 cscript //nologo %windir%\system32\slmgr.vbs /rilc %nul%
+call :dk_refresh
+call :dk_actids
+if not defined applist (
+set error=1
+call :dk_color %Red% "Checking Activation IDs                 [Not Found]"
+)
+)
+
+
+if exist "%tokenstore%\" if not exist "%tokenstore%\tokens.dat" (
+set error=1
+call :dk_color %Red% "Checking SPP tokens.dat                 [Not Found] [%tokenstore%\]"
+)
+
+
+if not exist %SystemRoot%\system32\sppsvc.exe (
+set error=1
+set showfix=1
+call :dk_color %Red% "Checking sppsvc.exe File      
