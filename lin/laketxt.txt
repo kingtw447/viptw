@@ -129,11 +129,10 @@
 {"Id":"04","Num":"04","Name":"驚豔台","Url":"http://125.227.210.55:8156/VideoInput/play.ts"},
 {"Id":"05","Num":"05","Name":"Sex Girl","Url":"http://125.227.210.55:62698/VideoInput/play.ts"},
 {"Id":"06","Num":"06","Name":"測試1","Url":"https://play1.laoyacdn.com/20220304/dbwsewNw/2000kb/hls/index.m3u8"},
-{"Id":"07","Num":"07","Name":"測試2","Url":"https://v2.hylyl.top/20211210/2KKrMihB/2000kb/hls/index.m3u8"},
-{"Id":"08","Num":"08","Name":"測試3","Url":"https://play1.laoyacdn.com/20220306/dSjDAG4d/1500kb/hls/index.m3u8"},
-{"Id":"09","Num":"09","Name":"測試4","Url":"https://play1.laoyacdn.com/20220304/q9wIWH8U/2000kb/hls/index.m3u8"},
-{"Id":"10","Num":"10","Name":"測試5","Url":"https://play1.laoyacdn.com/20220304/e2GFPSNm/2000kb/hls/index.m3u8"},
-{"Id":"11","Num":"11","Name":"測試6","Url":"https://play1.laoyacdn.com/20220306/gioSjL4q/1500kb/hls/index.m3u8"},
-{"Id":"12","Num":"12","Name":"測試7","Url":"https://play1.laoyacdn.com/20220306/Bpd3REsu/1500kb/hls/index.m3u8"},
-{"Id":"13","Num":"13","Name":"測試8","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}
+{"Id":"07","Num":"07","Name":"測試3","Url":"https://play1.laoyacdn.com/20220306/dSjDAG4d/1500kb/hls/index.m3u8"},
+{"Id":"08","Num":"08","Name":"測試4","Url":"https://play1.laoyacdn.com/20220304/q9wIWH8U/2000kb/hls/index.m3u8"},
+{"Id":"09","Num":"09","Name":"測試5","Url":"https://play1.laoyacdn.com/20220304/e2GFPSNm/2000kb/hls/index.m3u8"},
+{"Id":"10","Num":"10","Name":"測試6","Url":"https://play1.laoyacdn.com/20220306/gioSjL4q/1500kb/hls/index.m3u8"},
+{"Id":"11","Num":"11","Name":"測試7","Url":"https://play1.laoyacdn.com/20220306/Bpd3REsu/1500kb/hls/index.m3u8"},
+{"Id":"11","Num":"12","Name":"測試8","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
