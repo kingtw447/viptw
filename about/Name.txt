@@ -1,0 +1,172 @@
+set "_serv=ClipSVC wlidsvc sppsvc KeyIso LicenseManager Winmgmt DoSvc UsoSvc CryptSvc BITS TrustedInstaller wuauserv"
+if %winbuild% GEQ 17134 set "_serv=%_serv% WaaSMedicSvc"
+
+::  Client License Service (ClipSVC)
+::  Microsoft Account Sign-in Assistant
+::  Software Protection
+::  CNG Key Isolation
+::  Windows License Manager Service
+::  Windows Management Instrumentation
+::  Delivery Optimization
+::  Update Orchestrator Service
+::  Cryptographic Services
+::  Background Intelligent Transfer Service
+::  Windows Modules Installer
+::  Windows Update
+::  Windows Update Medic Service
+
+call :dk_errorcheck
+
+::  Check Windows updates and store app blockers
+
+set updatesblock=
+reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\Explorer /v SettingsPageVisibility %nul2% | find /i "windowsupdate" %nul% && set updatesblock=1
+reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\WindowsUpdateSysprepInProgress %nul% && set updatesblock=1
+reg query HKLM\SOFTWARE\Policies\Microsoft\Windows\WindowsUpdate /s %nul2% | findstr /i "NoAutoUpdate DisableWindowsUpdateAccess" %nul% && set updatesblock=1
+
+if defined updatesblock call :dk_color %Gray% "Checking Update Blocker In Registry     [Found]"
+
+if defined applist echo: %serv_e% | find /i "wuauserv" %nul% && (
+call :dk_color %Blue% "Windows Update is not working. Enable it incase if you have disabled it."
+reg query HKLM\SYSTEM\CurrentControlSet\Services\wuauserv /v WubLock %nul% && call :dk_color %Blue% "Sordum Windows Update Blocker tool has been used to block updates."
+)
+
+reg query "HKLM\SOFTWARE\Policies\Microsoft\WindowsStore" /v DisableStoreApps %nul2% | find /i "0x1" %nul% && (
+call :dk_color %Gray% "Checking Store Blocker In Registry      [Found]"
+)
+
+::========================================================================================================================================
+
+::  Detect Key
+
+set key=
+set altkey=
+set skufound=
+set changekey=
+set altapplist=
+set altedition=
+set notworking=
+
+if defined applist call :hwiddata key
+if not defined key (
+for /f "delims=" %%a in ('%psc% "$f=[io.file]::ReadAllText('!_batp!') -split ':getactivationid\:.*';iex ($f[1]);"') do (set altapplist=%%a)
+if defined altapplist call :hwiddata key
+)
+
+if defined notworking call :hwidfallback
+if not defined key call :hwidfallback
+
+if defined altkey (set key=%altkey%&set changekey=1&set notworking=)
+
+if defined notworking if defined notfoundaltactID (
+call :dk_color %Red% "Checking Alternate Edition For HWID     [%altedition% Activation ID Not Found]"
+)
+
+if not defined key (
+%eline%
+echo [%winos% ^| %winbuild% ^| SKU:%osSKU%]
+if not defined skufound (
+echo Unable to find this product in the supported product list.
+) else (
+echo Required License files not found in %SystemRoot%\System32\spp\tokens\skus\
+)
+echo Make sure you are using updated version of the script.
+echo %mas%
+echo:
+goto dk_done
+)
+
+if defined notworking set error=1
+
+::========================================================================================================================================
+
+::  安裝 金鑰
+
+echo:
+if defined changekey (
+call :dk_color %Blue% "[%altedition%] Edition product key will be used to enable HWID activation."
+echo:
+)
+
+if %_wmic% EQU 1 wmic path SoftwareLicensingService where __CLASS='SoftwareLicensingService' call InstallProductKey ProductKey="%key%" %nul%
+if %_wmic% EQU 0 %psc% "(([WMISEARCHER]'SELECT Version FROM SoftwareLicensingService').Get()).InstallProductKey('%key%')" %nul%
+if not %errorlevel%==0 cscript //nologo %windir%\system32\slmgr.vbs /ipk %key% %nul%
+set errorcode=%errorlevel%
+cmd /c exit /b %errorcode%
+if %errorcode% NEQ 0 set "errorcode=[0x%=ExitCode%]"
+
+if %errorcode% EQU 0 (
+call :dk_refresh
+echo 安裝通用產品金鑰          [%key%] [成功的]
+) else (
+call :dk_color %Red% "安裝通用產品金鑰          [%key%] [失敗的] %errorcode%"
+if not defined error (
+if defined altapplist call :dk_color %Red% "Activation ID not found for this key."
+call :dk_color %Blue% "%_fixmsg%"
+set showfix=1
+)
+set error=1
+)
+
+::========================================================================================================================================
+
+::  將 Windows 區域變更為美國以避免啟用問題，因為 Windows 商店授權在許多國家/地區不可用
+
+for /f "skip=2 tokens=2*" %%a in ('reg query "HKCU\Control Panel\International\Geo" /v Name %nul6%') do set "name=%%b"
+for /f "skip=2 tokens=2*" %%a in ('reg query "HKCU\Control Panel\International\Geo" /v Nation %nul6%') do set "nation=%%b"
+
+set regionchange=
+if not "%name%"=="US" (
+set regionchange=1
+%psc% "Set-WinHomeLocation -GeoId 244" %nul%
+if !errorlevel! EQU 0 (
+echo 將 Windows 區域變更為美國          [成功的]
+) else (
+call :dk_color %Red% "Changing Windows Region To USA          [Failed]"
+)
+)
+
+::==========================================================================================================================================
+
+::  Generate GenuineTicket.xml and apply
+::  In some cases clipup -v -o method fails and in some cases service restart method fails as well
+::  To maximize success rate and get better error details, script will install tickets two times (service restart + clipup -v -o)
+
+if not exist %SystemRoot%\system32\ClipUp.exe (
+call :dk_color %Red% "Checking ClipUp.exe File                [Not found, aborting the process]"
+call :dk_color2 %Blue% "Check this page for help" %_Yellow% " %mas%troubleshoot"
+goto :dl_final
+)
+
+set "tdir=%ProgramData%\Microsoft\Windows\ClipSVC\GenuineTicket"
+if not exist "%tdir%\" md "%tdir%\" %nul%
+
+if exist "%tdir%\Genuine*" del /f /q "%tdir%\Genuine*" %nul%
+if exist "%tdir%\*.xml" del /f /q "%tdir%\*.xml" %nul%
+if exist "%ProgramData%\Microsoft\Windows\ClipSVC\Install\Migration\*" del /f /q "%ProgramData%\Microsoft\Windows\ClipSVC\Install\Migration\*" %nul%
+
+call :hwiddata ticket
+
+copy /y /b "%tdir%\GenuineTicket" "%tdir%\GenuineTicket.xml" %nul%
+
+if not exist "%tdir%\GenuineTicket.xml" (
+call :dk_color %Red% "Generating GenuineTicket.xml            [Failed, aborting the process]"
+echo [%encoded%]
+if exist "%tdir%\Genuine*" del /f /q "%tdir%\Genuine*" %nul%
+goto :dl_final
+) else (
+echo 生成正版票.xml            [成功的]
+)
+
+set "_xmlexist=if exist "%tdir%\GenuineTicket.xml""
+
+%_xmlexist% (
+%psc% Restart-Service ClipSVC %nul%
+%_xmlexist% timeout /t 2 %nul%
+%_xmlexist% timeout /t 2 %nul%
+
+%_xmlexist% (
+set error=1
+if exist "%tdir%\*.xml" del /f /q "%tdir%\*.xml" %nul%
+call :dk_color %Red% "Installing GenuineTicket.xml            [Failed With ClipSVC Service Restart, Wait...]"
+)
