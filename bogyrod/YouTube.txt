@@ -5,7 +5,7 @@ if %winbuild% GEQ 17134 set "_serv=%_serv% WaaSMedicSvc"
 ::  Microsoft Account Sign-in Assistant
 ::  Software Protection
 ::  CNG Key Isolation
-::  Windows License Manager Service
+::  Windows Liense Manager Service
 ::  Windows Management Instrumentation
 ::  Delivery Optimization
 ::  Update Orchestrator Service
