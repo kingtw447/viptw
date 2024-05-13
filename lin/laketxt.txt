@@ -139,7 +139,7 @@
 {"Id":"14","Num":"14","Name":"測試5","Url":"https://play1.laoyacdn.com/20220306/gioSjL4q/1500kb/hls/index.m3u8"},
 {"Id":"15","Num":"15","Name":"測試6","Url":"https://play1.laoyacdn.com/20220306/Bpd3REsu/1500kb/hls/index.m3u8"},
 {"Id":"16","Num":"16","Name":"測試7","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}]},
-{"CategoryName":"測試","Password":"0937","Channel":[
+{"CategoryName":"測試","Password":"","Channel":[
 {"Id":"01","Num":"01","Name":"壹新聞1","Url":"https://z88.ubtvfans.com/live/rx1/2777/b6908ddbdf06ab2e4bdb37d549cd6b8c/index.m3u8"},
 {"Id":"02","Num":"02","Name":"壹新聞2","Url":"https://z88.ubtvfans.com/live/rx3/494/34a10e399d9b6f1cbfc5de4950430a02/index.m3u8"},
 {"Id":"03","Num":"03","Name":"壹新聞3","Url":"https://z88.ubtvfans.com/live/rx1/2777/56545d12ee6dcbf23fff2852f4891152/index.m3u8"}
