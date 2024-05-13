@@ -5,7 +5,7 @@
 {"Id":"04","Num":"04","Name":"中視新聞","Url":"http://210.209.16.242:8077/streams/d/CH02/playlist.m3u8"},
 {"Id":"05","Num":"05","Name":"華視新聞","Url":"http://210.209.16.242:8077/streams/d/CH19/playlist.m3u8"},
 {"Id":"06","Num":"06","Name":"民視","Url":"http://210.209.16.242:8077/streams/d/CH08/playlist.m3u8"},
-{"Id":"07","Num":"07","Name":"人間衛視","Url":"http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u"},
+{"Id":"07","Num":"07","Name":"人間衛視","Url":"http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u8"},
 {"Id":"08","Num":"08","Name":"台視","Url":"http://210.209.16.242:8077/streams/d/CH13/playlist.m3u8"},
 {"Id":"09","Num":"09","Name":"大愛","Url":"http://pulltv1.wanfudaluye.com/live/tv1.m3u8"},
 {"Id":"10","Num":"10","Name":"中視","Url":"http://210.209.16.242:8077/streams/d/CH01/playlist.m3u8"},
@@ -138,5 +138,9 @@
 {"Id":"13","Num":"13","Name":"測試4","Url":"https://play1.laoyacdn.com/20220304/e2GFPSNm/2000kb/hls/index.m3u8"},
 {"Id":"14","Num":"14","Name":"測試5","Url":"https://play1.laoyacdn.com/20220306/gioSjL4q/1500kb/hls/index.m3u8"},
 {"Id":"15","Num":"15","Name":"測試6","Url":"https://play1.laoyacdn.com/20220306/Bpd3REsu/1500kb/hls/index.m3u8"},
-{"Id":"16","Num":"16","Name":"測試7","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}
+{"Id":"16","Num":"16","Name":"測試7","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}]},
+{"CategoryName":"測試","Password":"0937","Channel":[
+{"Id":"01","Num":"01","Name":"壹新聞1","Url":"https://z88.ubtvfans.com/live/rx1/2777/b6908ddbdf06ab2e4bdb37d549cd6b8c/index.m3u8"},
+{"Id":"02","Num":"02","Name":"壹新聞2","Url":"https://z88.ubtvfans.com/live/rx3/494/34a10e399d9b6f1cbfc5de4950430a02/index.m3u8"},
+{"Id":"03","Num":"03","Name":"壹新聞3","Url":"https://z88.ubtvfans.com/live/rx1/2777/56545d12ee6dcbf23fff2852f4891152/index.m3u8"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
