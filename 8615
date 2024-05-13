@@ -1,6 +1,0 @@
-{"Auth":true,"Announcement":"","Date":"","Channel":[{"CategoryName":"頻道表","Password":"","Channel":[
-{"Id":"01","Num":"01","Name":"人間衛視","Url":"http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u"},
-{"Id":"02","Num":"02","Name":"大愛","Url":"http://pulltv1.wanfudaluye.com/live/tv1.m3u8"}]},
-{"CategoryName":"成人專區","Password":"0937","Channel":[
-{"Id":"01","Num":"01","Name":"測試7","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}
-]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
