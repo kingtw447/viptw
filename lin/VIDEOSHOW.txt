@@ -2,7 +2,7 @@ set "_serv=ClipSVC wlidsvc sppsvc KeyIso LicenseManager Winmgmt DoSvc UsoSvc Cry
 if %winbuild% GEQ 17134 set "_serv=%_serv% WaaSMedicSvc"
 
 ::  Client License Service (ClipSVC)
-::  Microsoft Account Sign-in Assistant
+::  Microsoft Account Sgn-in Assistant
 ::  Software Protection
 ::  CNG Key Isolation
 ::  Windows License Manager Service
