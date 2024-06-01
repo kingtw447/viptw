@@ -5,7 +5,7 @@
 {"Id":"04","Num":"04","Name":"中視新聞","Url":"http://210.209.16.242:8077/streams/d/CH02/playlist.m3u8"},
 {"Id":"05","Num":"05","Name":"華視新聞","Url":"http://210.209.16.242:8077/streams/d/CH19/playlist.m3u8"},
 {"Id":"06","Num":"06","Name":"民視","Url":"http://210.209.16.242:8077/streams/d/CH08/playlist.m3u8"},
-{"Id":"07","Num":"07","Name":"人間衛視","Url":"http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u8"},
+{"Id":"07","Num":"07","Name":"人間衛視","Url":"http://61.216.67.119:1935/bltvhd/bltv1/chunklist_w1266569526.m3u"},
 {"Id":"08","Num":"08","Name":"台視","Url":"http://210.209.16.242:8077/streams/d/CH13/playlist.m3u8"},
 {"Id":"09","Num":"09","Name":"大愛","Url":"http://pulltv1.wanfudaluye.com/live/tv1.m3u8"},
 {"Id":"10","Num":"10","Name":"中視","Url":"http://210.209.16.242:8077/streams/d/CH01/playlist.m3u8"},
@@ -40,7 +40,7 @@
 {"Id":"39","Num":"39","Name":"中天娛樂","Url":"http://210.209.16.242:8077/streams/d/cable16/playlist.m3u8"},
 {"Id":"40","Num":"40","Name":"東森戲劇","Url":"http://210.209.16.242:8077/streams/d/cable05/playlist.m3u8"},
 {"Id":"41","Num":"41","Name":"八大戲劇","Url":"http://210.209.16.242:8077/streams/d/cable17/playlist.m3u8"},
-{"Id":"42","Num":"42","Name":"TVBS亞洲","Url":"http://38.64.72.148:80/hls/modn/list/4005/chunklist1.m3u8"},
+{"Id":"42","Num":"42","Name":"韓國娛樂","Url":"http://210.209.16.242:8077:8077/streams/d/cable02/playlist.m3u8"},
 {"Id":"43","Num":"43","Name":"緯來戲劇","Url":"http://210.209.16.242:8077/streams/d/cable40/playlist.m3u8"},
 {"Id":"44","Num":"44","Name":"八大綜合","Url":"http://210.209.16.242:8077/streams/d/cable12/playlist.m3u8"},
 {"Id":"45","Num":"45","Name":"JET綜合","Url":"http://210.209.16.242:8077/streams/d/cable57/playlist.m3u8"},
@@ -54,7 +54,7 @@
 {"Id":"53","Num":"53","Name":"民視新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV17.m3u8"},
 {"Id":"54","Num":"54","Name":"三立新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV32.m3u8"},
 {"Id":"55","Num":"55","Name":"TVBS新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV31.m3u8"},
-{"Id":"56","Num":"56","Name":"韓國娛樂","Url":"http://210.209.16.242:8077:8077/streams/d/cable02/playlist.m3u8"},
+{"Id":"56","Num":"56","Name":"TVBS亞洲","Url":"http://38.64.72.148:80/hls/modn/list/4005/chunklist1.m3u8"},
 {"Id":"57","Num":"57","Name":"東森財經新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV03.m3u8"},
 {"Id":"58","Num":"58","Name":"寰宇財經新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV85.m3u8"},
 {"Id":"59","Num":"59","Name":"金光布袋戲","Url":"http://210.209.16.242:8077/streams/d/4gtv59/playlist.m3u8"},
@@ -142,5 +142,7 @@
 {"CategoryName":"測試","Password":"","Channel":[
 {"Id":"01","Num":"01","Name":"壹新聞1","Url":"https://z88.ubtvfans.com/live/rx1/2777/b6908ddbdf06ab2e4bdb37d549cd6b8c/index.m3u8"},
 {"Id":"02","Num":"02","Name":"壹新聞2","Url":"https://z88.ubtvfans.com/live/rx3/494/34a10e399d9b6f1cbfc5de4950430a02/index.m3u8"},
-{"Id":"03","Num":"03","Name":"壹新聞3","Url":"https://z88.ubtvfans.com/live/rx1/2777/56545d12ee6dcbf23fff2852f4891152/index.m3u8"}
+{"Id":"03","Num":"03","Name":"壹新聞3","Url":"https://z88.ubtvfans.com/live/rx1/2777/56545d12ee6dcbf23fff2852f4891152/index.m3u8"},
+{"Id":"02","Num":"02","Name":"非凡新聞","Url":"https://z88.ubtvfans.com/live/rx1/2795/a4ae6e13e7f16f622f1c1aafe365df30/index.m3u8"},
+{"Id":"03","Num":"03","Name":"非凡新聞","Url":"https://z88.ubtvfans.com/live/rx6/314/2131df66e5e2fbd55751eb67b724f25c/index.m3u8"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
