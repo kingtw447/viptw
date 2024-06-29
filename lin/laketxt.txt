@@ -50,7 +50,7 @@
 {"Id":"49","Num":"49","Name":"寰宇新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV02.m3u8"},
 {"Id":"50","Num":"50","Name":"年代新聞","Url":"http://210.209.16.242:8077/streams/d/cable21/playlist.m3u8"},
 {"Id":"51","Num":"51","Name":"東森新聞","Url":"http://210.209.16.242:8077/streams/d/cable22/playlist.m3u8"},
-{"Id":"52","Num":"52","Name":"中天新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV28.m3u8"},
+{"Id":"52","Num":"52","Name":"中天新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV49.m3u8"},
 {"Id":"53","Num":"53","Name":"民視新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV17.m3u8"},
 {"Id":"54","Num":"54","Name":"三立新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV32.m3u8"},
 {"Id":"55","Num":"55","Name":"TVBS新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV31.m3u8"},
@@ -138,11 +138,5 @@
 {"Id":"13","Num":"13","Name":"測試4","Url":"https://play1.laoyacdn.com/20220304/e2GFPSNm/2000kb/hls/index.m3u8"},
 {"Id":"14","Num":"14","Name":"測試5","Url":"https://play1.laoyacdn.com/20220306/gioSjL4q/1500kb/hls/index.m3u8"},
 {"Id":"15","Num":"15","Name":"測試6","Url":"https://play1.laoyacdn.com/20220306/Bpd3REsu/1500kb/hls/index.m3u8"},
-{"Id":"16","Num":"16","Name":"測試7","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}]},
-{"CategoryName":"測試","Password":"","Channel":[
-{"Id":"01","Num":"01","Name":"壹新聞1","Url":"https://z88.ubtvfans.com/live/rx1/2777/b6908ddbdf06ab2e4bdb37d549cd6b8c/index.m3u8"},
-{"Id":"02","Num":"02","Name":"壹新聞2","Url":"https://z88.ubtvfans.com/live/rx3/494/34a10e399d9b6f1cbfc5de4950430a02/index.m3u8"},
-{"Id":"03","Num":"03","Name":"壹新聞3","Url":"https://z88.ubtvfans.com/live/rx1/2777/56545d12ee6dcbf23fff2852f4891152/index.m3u8"},
-{"Id":"02","Num":"02","Name":"非凡新聞","Url":"https://z88.ubtvfans.com/live/rx1/2795/a4ae6e13e7f16f622f1c1aafe365df30/index.m3u8"},
-{"Id":"03","Num":"03","Name":"非凡新聞","Url":"https://z88.ubtvfans.com/live/rx6/314/2131df66e5e2fbd55751eb67b724f25c/index.m3u8"}
+{"Id":"16","Num":"16","Name":"測試7","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
