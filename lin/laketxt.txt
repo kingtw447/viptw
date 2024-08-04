@@ -53,7 +53,7 @@
 {"Id":"52","Num":"52","Name":"中天新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV49.m3u8"},
 {"Id":"53","Num":"53","Name":"民視新聞","Url":"http://210.209.16.242:8077/streams/d/4gtv01/playlist.m3u8"},
 {"Id":"54","Num":"54","Name":"三立新聞","Url":"http://210.209.16.242:8077/streams/d/cable39/playlist.m3u8"},
-{"Id":"55","Num":"55","Name":"TVBS新聞","Url":"http://211.23.114.106:8533/http/60.251.39.91:8081/hls/69/811/ch33.m3u8"},
+{"Id":"55","Num":"55","Name":"TVBS新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV31.m3u8"},
 {"Id":"56","Num":"56","Name":"TVBS亞洲","Url":"http://38.64.72.148:80/hls/modn/list/4005/chunklist1.m3u8"},
 {"Id":"57","Num":"57","Name":"東森財經新聞","Url":"http://210.209.16.242:8077/streams/d/cable54/playlist.m3u8"},
 {"Id":"58","Num":"58","Name":"寰宇財經新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV85.m3u8"},
