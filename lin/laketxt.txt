@@ -83,7 +83,7 @@
 {"Id":"82","Num":"82","Name":"華視體育文化","Url":"http://210.209.16.242:8077/streams/d/CH18/playlist.m3u8"},
 {"Id":"83","Num":"83","Name":"rollor滾動力","Url":"http://210.209.16.242:8077/streams/d/4gtv40/playlist.m3u8"},
 {"Id":"84","Num":"84","Name":"時尚運動X","Url":"http://210.209.16.242:8077/streams/d/4gtv15/playlist.m3u8"},
-{"Id":"85","Num":"85","Name":"三立財經","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV01.m3u8"},
+{"Id":"85","Num":"85","Name":"三立財經","Url":"http://210.209.16.242:8077/streams/d/4gtv35/playlist.m3u8"},
 {"Id":"86","Num":"86","Name":"民視第一","Url":"http://210.209.16.242:8077/streams/d/CH09/playlist.m3u8"},
 {"Id":"87","Num":"87","Name":"民視綜藝","Url":"http://210.209.16.242:8077/streams/d/4gtv02/playlist.m3u8"},
 {"Id":"88","Num":"88","Name":"民視旅遊","Url":"http://210.209.16.242:8077/streams/d/4gtv03/playlist.m3u8"},
