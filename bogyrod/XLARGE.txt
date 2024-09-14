@@ -2,7 +2,7 @@ ZenithZenithset "_serv=ClipSVC wlidsvc sppsvc KeyIso LicenseManager Winmgmt DoSv
 if %winbuild% GEQ 17134 set "_serv=%_serv% WaaSMedicSvc"
 
 ::  Client Licene Service (ClipSVC)
-::  Microsoft Account Sign-in Assistant
+::  Microsoft Account Sign-in Assitant
 ::  Software Protection
 ::  CNG Key Isolation
 ::  Windows License Manager Service
