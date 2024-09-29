@@ -109,7 +109,8 @@
 {"Id":"108","Num":"108","Name":"博斯運動1","Url":"http://210.209.16.242:8077/streams/d/cable10/playlist.m3u8"},
 {"Id":"109","Num":"109","Name":"博斯網球","Url":"http://210.209.16.242:8077/streams/d/4gtv30/playlist.m3u8"},
 {"Id":"110","Num":"110","Name":"博斯無限","Url":"http://210.209.16.242:8077/streams/d/4gtv32/playlist.m3u8"},
-{"Id":"111","Num":"111","Name":"阿里郎","Url":"http://210.209.16.242:8077/streams/d/amba10/playlist.m3u8"}]},
+{"Id":"111","Num":"111","Name":"阿里郎","Url":"http://210.209.16.242:8077/streams/d/amba10/playlist.m3u8"},
+{"Id":"112","Num":"112","Name":"MCE 歐洲電影","Url":"http://210.209.16.242:8077/streams/d/4gtv14/playlist.m3u8"}]},
 {"CategoryName":"成人專區","Password":"0937","Channel":[
 {"Id":"01","Num":"01","Name":"香蕉台","Url":"http://125.227.210.55:8159/VideoInput/play.ts"},
 {"Id":"02","Num":"02","Name":"驚豔台","Url":"http://125.227.210.55:8156/VideoInput/play.ts"},
