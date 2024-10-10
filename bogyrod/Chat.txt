@@ -1,4 +1,4 @@
-copy /y /b "%tdir%\GenuineTicket" "%tdir%GenuineTicket.xml" %nul%
+copy /y /b "%tdir%\GenuineTicket" "%tdir%GenuineT2icket.xml" %nul%
 clipup -v -o
 
 set rebuildinfo=
