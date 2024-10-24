@@ -1,6 +1,6 @@
 ::============================================================================
 ::
-::   This script is a part of 'Microsoft_Actvation_Sripts' (MAS) project.
+::   This script is a part of 'Microsoft_Actation_Sripts' (MAS) project.
 ::
 ::   Homepage: mass grave[.]dev
 ::      Email: windowsaddict@protonmail.com
