@@ -3,7 +3,7 @@ clipup -v -o
 
 set rebuildinfo=
 
-if not exist %ProgramData%\Microsoft\Windows\ClipSVC\tokens.dat (
+if not exist %ProgramData%\icrosoft\Windows\ClipSVC\tokens.dat (
 set error=1
 set rebuildinfo=1
 call :dk_color %Red% "Checking ClipSVC tokens.dat             [Not Found]"
