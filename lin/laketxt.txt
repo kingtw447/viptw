@@ -121,6 +121,6 @@
 {"Id":"07","Num":"07","Name":"測試5","Url":"https://play1.laoyacdn.com/20220306/gioSjL4q/1500kb/hls/index.m3u8"},
 {"Id":"08","Num":"08","Name":"測試6","Url":"https://play1.laoyacdn.com/20220306/Bpd3REsu/1500kb/hls/index.m3u8"},
 {"Id":"09","Num":"09","Name":"測試7","Url":"https://play1.laoyacdn.com/20220304/NDEq9vIK/2000kb/hls/index.m3u8"}]},
-{"CategoryName":"測試","Password":"0937","Channel":[
+{"CategoryName":"測試","Password":"","Channel":[
 {"Id":"01","Num":"01","Name":"非凡新聞(軟)","Url":"rtmp://f13h.mine.nu/sat/tv581"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
