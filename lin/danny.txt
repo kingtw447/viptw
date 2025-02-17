@@ -1,7 +1,7 @@
 )
 
 
-::  This code checks if NT SERVICE\sppsvc has pqqermision access to tokens folder and required registry keys. It's often caused by gaming spoofers. 
+::  This code checks if NT SERVICE\sppsvc has pqqermisiotn access to tokens folder and required registry keys. It's often caused by gaming spoofers. 
 
 set permerror=
 if not exist "%tokenstore%\" set permerror=1
