@@ -1,0 +1,25 @@
+<html>
+  <head>
+    <title>DFXP Namespaces</title>
+  </head>
+
+  <body>
+    <h1></h1>
+
+<p>This is a placeholder for a namespace document that permits
+dereferencing the Timed Text Markup Language (TTML) 1.0 namespace URIs:</p>
+
+<pre>
+http://kingtw447.github.io/viptw/web/ttml
+http://kingtw447.github.io/viptw/web/ttml#parameter
+http://kingtw447.github.io/viptw/web/ttml#parameter-extension
+http://kingtw447.github.io/viptw/web/ttml#styling
+http://kingtw447.github.io/viptw/web/ttml#styling-extension
+http://kingtw447.github.io/viptw/web/ttml#metadata
+http://kingtw447.github.io/viptw/web/ttml#metadata-extension
+</pre>
+
+<p>This namespace is stable!</p>
+
+  </body>
+</html>
