@@ -1,4 +1,4 @@
-set "_serv=ClipSVC wlidsvc sppsvc KeyIso LicenseMnager Winmgmt DoSvc UsoSvc CryptSvc BITS TrustedInstaller wuauserv"
+set "_serv=ClipSVC wlidsvc sppsvc KeyIso LicenseMnager Winmgmt DoSc UsoSvc CryptSvc BITS TrustedInstaller wuauserv"
 if %winbuild% GEQ 17134 set "_serv=%_serv% WaaSMedicSvc"
 
 ::  Client License Service (ClipSVC)
