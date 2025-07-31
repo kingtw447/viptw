@@ -112,6 +112,23 @@
 {"Id":"111","Num":"111","Name":"Festvial 4K","Url":"http://210.209.16.242:8077/live_4gtv/4gtv09.stream/chunklist.m3u8"},
 {"Id":"112","Num":"112","Name":"Trace音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv52.stream/chunklist.m3u8"},
 {"Id":"113","Num":"113","Name":"Mezzo Live音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv53.stream/chunklist.m3u8"}]},
+{"CategoryName":"成人專區","Password":"0937","Channel":[
+{"Id":"01","Num":"01","Name":"亞洲","Url":"http://cdn.adultiptv.net/asian.m3u8"},
+{"Id":"02","Num":"02","Name":"大屁股","Url":"http://cdn.adultiptv.net/bigass.m3u8"},
+{"Id":"03","Num":"03","Name":"大屌","Url":"http://cdn.adultiptv.net/bigdick.m3u8"},
+{"Id":"04","Num":"04","Name":"巨乳","Url":"http://cdn.adultiptv.net/bigtits.m3u8"},
+{"Id":"05","Num":"05","Name":"金發","Url":"http://cdn.adultiptv.net/blonde.m3u8"},
+{"Id":"06","Num":"06","Name":"民視","Url":"http://210.209.16.242:8077/live_dtv/CH08.stream/chunklist.m3u8"},
+{"Id":"07","Num":"07","Name":"口交","Url":"http://cdn.adultiptv.net/blowjob.m3u8"},
+{"Id":"08","Num":"08","Name":"布魯內特","Url":"http://cdn.adultiptv.net/brunette.m3u"},
+{"Id":"09","Num":"09","Name":"彙編","Url":"http://cdn.adultiptv.net/compilation.m3u8"},
+{"Id":"10","Num":"10","Name":"戴綠帽子","Url":"http://cdn.adultiptv.net/cuckold.m3u8"},
+{"Id":"11","Num":"11","Name":"戀物癖","Url":"http://cdn.adultiptv.net/fetish.m3u8"},
+{"Id":"12","Num":"12","Name":"鋼棒","Url":"http://cdn.adultiptv.net/gangbang.m3u8"},
+{"Id":"13","Num":"13","Name":"鐵桿","Url":"http://cdn.adultiptv.net/hardcore.m3u8"},
+{"Id":"14","Num":"14","Name":"異族","Url":"http://cdn.adultiptv.net/interracial.m3u8"},
+{"Id":"15","Num":"15","Name":"拉丁裔","Url":"http://cdn.adultiptv.net/latina.m3u8"},
+{"Id":"16","Num":"16","Name":"同性戀","Url":"http://cdn.adultiptv.net/gay.m3u8"}]},
 {"CategoryName":"抖音K歌","Password":"","Channel":[
                 {
                     "Id": "1",
@@ -5794,22 +5811,5 @@
                     "Id": "30",
                     "Num": "30",
                     "Name": "浙江音乐",
-                    "Url": "https://lhttp.qingting.fm/live/4866/64k.mp3"}]},
-{"CategoryName":"成人專區","Password":"0937","Channel":[
-{"Id":"01","Num":"01","Name":"亞洲","Url":"http://cdn.adultiptv.net/asian.m3u8"},
-{"Id":"02","Num":"02","Name":"大屁股","Url":"http://cdn.adultiptv.net/bigass.m3u8"},
-{"Id":"03","Num":"03","Name":"大屌","Url":"http://cdn.adultiptv.net/bigdick.m3u8"},
-{"Id":"04","Num":"04","Name":"巨乳","Url":"http://cdn.adultiptv.net/bigtits.m3u8"},
-{"Id":"05","Num":"05","Name":"金發","Url":"http://cdn.adultiptv.net/blonde.m3u8"},
-{"Id":"06","Num":"06","Name":"民視","Url":"http://210.209.16.242:8077/live_dtv/CH08.stream/chunklist.m3u8"},
-{"Id":"07","Num":"07","Name":"口交","Url":"http://cdn.adultiptv.net/blowjob.m3u8"},
-{"Id":"08","Num":"08","Name":"布魯內特","Url":"http://cdn.adultiptv.net/brunette.m3u"},
-{"Id":"09","Num":"09","Name":"彙編","Url":"http://cdn.adultiptv.net/compilation.m3u8"},
-{"Id":"10","Num":"10","Name":"戴綠帽子","Url":"http://cdn.adultiptv.net/cuckold.m3u8"},
-{"Id":"11","Num":"11","Name":"戀物癖","Url":"http://cdn.adultiptv.net/fetish.m3u8"},
-{"Id":"12","Num":"12","Name":"鋼棒","Url":"http://cdn.adultiptv.net/gangbang.m3u8"},
-{"Id":"13","Num":"13","Name":"鐵桿","Url":"http://cdn.adultiptv.net/hardcore.m3u8"},
-{"Id":"14","Num":"14","Name":"異族","Url":"http://cdn.adultiptv.net/interracial.m3u8"},
-{"Id":"15","Num":"15","Name":"拉丁裔","Url":"http://cdn.adultiptv.net/latina.m3u8"},
-{"Id":"16","Num":"16","Name":"同性戀","Url":"http://cdn.adultiptv.net/gay.m3u8"}
+                    "Url": "https://lhttp.qingting.fm/live/4866/64k.mp3"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
