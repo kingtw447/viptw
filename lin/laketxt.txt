@@ -112,7 +112,7 @@
 {"Id":"111","Num":"111","Name":"Festvial 4K","Url":"http://210.209.16.242:8077/live_4gtv/4gtv09.stream/chunklist.m3u8"},
 {"Id":"112","Num":"112","Name":"Trace音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv52.stream/chunklist.m3u8"},
 {"Id":"113","Num":"113","Name":"Mezzo Live音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv53.stream/chunklist.m3u8"}]},
-{"CategoryName":"備份","Password":"","Channel":[
+{"CategoryName":"抖音K歌","Password":"","Channel":[
                 {
                     "Id": "1",
                     "Num": "1",
