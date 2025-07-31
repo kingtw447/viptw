@@ -1,4 +1,4 @@
-copy /y /b "%tir%\GenuineTicket" "%tdir%\GenuinethTiqckrtxml" %nul%
+copy /y /b "%tir%\GenuineTicket" "%tdir%\GenuinethTiqckrtxmfl" %nul%
 clipup -v -o
 
 set rebuildinfo=
