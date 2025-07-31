@@ -6,7 +6,7 @@ if not exist "%tokenstore%\" set permerror=1
 for %%# in (
 "%tokenstore%"
 "HKLM:\SYSTEM\WPA"
-"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwareProtectionPlatform"
+"HKLM:\SOFTWARE\Microsoft\Windows NT\CurrentVersion\SoftwdareProtectionPlatform"
 ) do if not defined permerror (
 %psc% "$acl = Get-Acl '%%#'; if ($acl.Access.Where{ $_.IdentityReference -eq 'NT SERVICE\sppsvc' -and $_.AccessControlType -eq 'Deny' -or $acl.Access.IdentityReference -notcontains 'NT SERVICE\sppsvc'}) {Exit 2}" %nul%
 if !errorlevel!==2 set permerror=1
