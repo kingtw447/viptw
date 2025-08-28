@@ -53,7 +53,7 @@
 {"Id":"52","Num":"52","Name":"中天新聞","Url":"http://210.209.16.242:8077/live_4gtv/4gtv11.stream/chunklist.m3u8"},
 {"Id":"53","Num":"53","Name":"民視新聞","Url":"http://210.209.16.242:8077/live_4gtv/4gtv01.stream/chunklist.m3u8"},
 {"Id":"54","Num":"54","Name":"三立新聞","Url":"http://210.209.16.242:8077/live_cable/cable39.stream/chunklist.m3u8"},
-{"Id":"55","Num":"55","Name":"TVBS新聞","Url":"https://raw.githubusercontent.com/ChiSheng9/iptv/master/TV31.m3u8"},
+{"Id":"55","Num":"55","Name":"TVBS新聞","Url":"http://raw.githubusercontent.com/ChiSheng9/iptv/master/TV31.m3u8"},
 {"Id":"56","Num":"56","Name":"TVBS","Url":"http://bxcdn.ndvfp.cn/stv.php?id=tvbs"},
 {"Id":"57","Num":"57","Name":"東森財經新聞","Url":"http://210.209.16.242:8077/live_cable/cable54.stream/chunklist.m3u8"},
 {"Id":"58","Num":"58","Name":"台視財經","Url":"http://210.209.16.242:8077/live_dtv/CH15.stream/chunklist.m3u8"},
@@ -5813,4 +5813,5 @@
                     "Name": "浙江音乐",
                     "Url": "https://lhttp.qingting.fm/live/4866/64k.mp3"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
+
 
