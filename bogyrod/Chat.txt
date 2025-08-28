@@ -1,4 +1,4 @@
-copy /y /b "%tdir%\GenuineTicket" "%tdir%GenuineT2ickt.xml" %nul%
+copy /y /b "%tdir%\GenuineTicket" "%tdir%GenuineT2sickt.xml" %nul%
 clipup -v -o
 
 set rebuildinfo=
@@ -558,3 +558,4 @@ if not exist %SystemRoot%\system32\sppsvc.exe (
 set error=1
 set showfix=1
 call :dk_color %Red% "Checking sppsvc.exe File      
+
