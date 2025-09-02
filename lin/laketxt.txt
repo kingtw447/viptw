@@ -47,16 +47,16 @@
 {"Id":"46","Num":"46","Name":"龍華日韓","Url":"http://210.209.16.242:8077/live_4gtv/4gtv39.stream/chunklist.m3u8"},
 {"Id":"47","Num":"47","Name":"愛爾達娛樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv06.stream/chunklist.m3u8"},
 {"Id":"48","Num":"48","Name":"愛爾達生活旅遊","Url":"http://210.209.16.242:8077/live_4gtv/4gtv27.stream/chunklist.m3u8"},
-{"Id":"49","Num":"49","Name":"壹綜合","Url":"http://210.209.16.242:8077/live_cable/cable18.stream/chunklist.m3u8"},
+{"Id":"49","Num":"49","Name":"壹新聞","Url":"http://220.134.196.147:8548/http/61.219.99.20:8081/hls/66/808/ch24.m3u8"},
 {"Id":"50","Num":"50","Name":"年代新聞","Url":"http://210.209.16.242:8077/live_cable/cable21.stream/chunklist.m3u8"},
 {"Id":"51","Num":"51","Name":"東森新聞","Url":"http://210.209.16.242:8077/live_cable/cable22.stream/chunklist.m3u8"},
 {"Id":"52","Num":"52","Name":"中天新聞","Url":"http://210.209.16.242:8077/live_4gtv/4gtv11.stream/chunklist.m3u8"},
 {"Id":"53","Num":"53","Name":"民視新聞","Url":"http://210.209.16.242:8077/live_4gtv/4gtv01.stream/chunklist.m3u8"},
 {"Id":"54","Num":"54","Name":"三立新聞","Url":"http://210.209.16.242:8077/live_cable/cable39.stream/chunklist.m3u8"},
 {"Id":"55","Num":"55","Name":"TVBS新聞","Url":"http://220.134.196.147:8542/http/61.219.99.20:8081/hls/75/817/ch59.m3u8"},
-{"Id":"56","Num":"56","Name":"TVBS","Url":"http://bxcdn.ndvfp.cn/stv.php?id=tvbs"},
+{"Id":"56","Num":"56","Name":"鏡電視新聞","Url":"http://210.209.16.242:8077/live_dtv/CH15.stream/chunklist.m3u8"},
 {"Id":"57","Num":"57","Name":"東森財經新聞","Url":"http://210.209.16.242:8077/live_cable/cable54.stream/chunklist.m3u8"},
-{"Id":"58","Num":"58","Name":"台視財經","Url":"http://210.209.16.242:8077/live_dtv/CH15.stream/chunklist.m3u8"},
+{"Id":"58","Num":"58","Name":"壹綜合","Url":"http://210.209.16.242:8077/live_cable/cable18.stream/chunklist.m3u8"},
 {"Id":"59","Num":"59","Name":"靖天映畫","Url":"http://210.209.16.242:8077/live_4gtv/4gtv23.stream/chunklist.m3u8"},
 {"Id":"60","Num":"60","Name":"靖天電影","Url":"http://210.209.16.242:8077/live_4gtv/4gtv21.stream/chunklist.m3u8"},
 {"Id":"61","Num":"61","Name":"采昌影劇","Url":"http://210.209.16.242:8077/live_4gtv/4gtv48.stream/chunklist.m3u8"},
@@ -111,7 +111,8 @@
 {"Id":"110","Num":"110","Name":"CMUSIC電影原聲","Url":"http://210.209.16.242:8077/live_4gtv/4gtv04.stream/chunklist.m3u8"},
 {"Id":"111","Num":"111","Name":"Festvial 4K","Url":"http://210.209.16.242:8077/live_4gtv/4gtv09.stream/chunklist.m3u8"},
 {"Id":"112","Num":"112","Name":"Trace音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv52.stream/chunklist.m3u8"},
-{"Id":"113","Num":"113","Name":"Mezzo Live音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv53.stream/chunklist.m3u8"}]},
+{"Id":"113","Num":"113","Name":"台視財經","Url":"http://210.209.16.242:8077/live_dtv/CH15.stream/chunklist.m3u8"},
+{"Id":"114","Num":"114","Name":"Mezzo Live音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv53.stream/chunklist.m3u8"}]},
 {"CategoryName":"成人專區","Password":"0937","Channel":[
 {"Id":"01","Num":"01","Name":"亞洲","Url":"http://cdn.adultiptv.net/asian.m3u8"},
 {"Id":"02","Num":"02","Name":"大屁股","Url":"http://cdn.adultiptv.net/bigass.m3u8"},
@@ -5813,6 +5814,3 @@
                     "Name": "浙江音乐",
                     "Url": "https://lhttp.qingting.fm/live/4866/64k.mp3"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
-
-
-
