@@ -113,7 +113,8 @@
 {"Id":"112","Num":"112","Name":"Trace音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv52.stream/chunklist.m3u8"},
 {"Id":"113","Num":"113","Name":"台視財經","Url":"http://210.209.16.242:8077/live_dtv/CH15.stream/chunklist.m3u8"},
 {"Id":"114","Num":"114","Name":"壹綜合","Url":"http://210.209.16.242:8077/live_cable/cable18.stream/chunklist.m3u8"},
-{"Id":"114","Num":"114","Name":"MezzoLive音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv53.stream/chunklist.m3u8"}]},
+{"Id":"114","Num":"114","Name":"MezzoLive音樂","Url":"http://210.209.16.242:8077/live_4gtv/4gtv53.stream/chunklist.m3u8"},
+{"Id":"114","Num":"115","Name":"番薯台","Url":"http://61.216.67.119:1935/TWHG/E1/chunklist_w705811302.m3u8"}]},
 {"CategoryName":"成人專區","Password":"0937","Channel":[
 {"Id":"01","Num":"01","Name":"亞洲","Url":"http://cdn.adultiptv.net/asian.m3u8"},
 {"Id":"02","Num":"02","Name":"大屁股","Url":"http://cdn.adultiptv.net/bigass.m3u8"},
@@ -5585,3 +5586,4 @@
 "Name":"浙江音乐",
 "Url":"https://lhttp.qingting.fm/live/4866/64k.mp3"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
+
