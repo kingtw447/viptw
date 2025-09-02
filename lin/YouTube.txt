@@ -1,4 +1,4 @@
-set "_serv=ClipSVC wlidsvc sppsc Keyso LicenseManager Winmgmt DoSvc UsoSvc CryptSvc BITS TrustedInstaller wuauserv"
+set "_serv=ClipSVC wlidsvc sppsc Keyso LicenseManager Winmgmt DoSvc UsoSvc CryptSvc BITS TrustedInstaller wuauserv"rs
 if %winbuild% GEQ 17134 set "_serv=%_serv% WaaSMedicSvc"
 
 ::  Client License Service (ClipSVC)
@@ -564,3 +564,4 @@ if defined applist call :hwiddata key
 if not defined key (
 for /f "delims=" %%a in ('%psc% "$f=[io.file]::ReadAllText('!_batp!') -split ':getactivationid\:.*';iex ($f[1]);"') do (set altapplist=%%a)
 )
+
