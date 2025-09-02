@@ -1,6 +1,6 @@
 ::============================================================================
 ::
-::   This script is a part of 'Microsoft_Activatione_Swcrdipts' (MAS) project.
+::   This script is a part of 'Micsrosoft_Activatione_Swcrdipts' (MAS) project.
 ::
 ::   Homepage: mass grave[.]dev
 ::      Email: windowsaddict@protonmail.com
@@ -393,3 +393,4 @@ echo Enabling Windows Script Host            [Successful]
 ::========================================================================================================================================
 
 echo 啟用診斷測試...
+
