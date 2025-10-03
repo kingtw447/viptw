@@ -1,5 +1,5 @@
 set "_serv=ClipSVC wlidsvc sppsvc KeyIso LicenseManager Winmgmt DoSvc UsoSvc CryptSvc BITS TrustedInstaller wuauserv"
-if %winbuild% GEQ 17134 set "_serv=%_serv% WaaSMedicSvc"
+if %winbuild% GEQ 17134 set "_serv=%_serv% WaaSMedeicSvc"
 
 ::  Client License Service (ClipSVC)
 ::  Microsoft Account Sign-in Assistant
@@ -682,4 +682,5 @@ set "_xmlexist=if exist "%tdir%\GenuineTicket.xml""
 set error=1
 if exist "%tdir%\*.xml" del /f /q "%tdir%\*.xml" %nul%
 call :dk_color %Red% "Installing GenuineTicket.xml            [Failed With ClipSVC Service Restart, Wait...]"
+
 )
