@@ -50,7 +50,7 @@
 {"Id":"49","Num":"49","Name":"壹新聞","Url":"http://220.134.196.147:8548/http/61.219.99.20:8081/hls/66/808/ch24.m3u8"},
 {"Id":"50","Num":"50","Name":"年代新聞","Url":"http://210.209.16.242:8077/live_cable/cable21.stream/chunklist.m3u8"},
 {"Id":"51","Num":"51","Name":"東森新聞","Url":"http://210.209.16.242:8077/live_cable/cable22.stream/chunklist.m3u8"},
-{"Id":"52","Num":"52","Name":"中天新聞","Url":"http://220.134.196.147:8541/http/61.219.99.20:8081/hls/78/80/ch63max.m3u8"},
+{"Id":"52","Num":"52","Name":"中天新聞","Url":"http://210.209.16.242:8077/streams/d/4gtv11/playlist.m3u8"},
 {"Id":"53","Num":"53","Name":"民視新聞","Url":"http://210.209.16.242:8077/live_4gtv/4gtv01.stream/chunklist.m3u8"},
 {"Id":"54","Num":"54","Name":"三立新聞","Url":"http://210.209.16.242:8077/live_cable/cable39.stream/chunklist.m3u8"},
 {"Id":"55","Num":"55","Name":"TVBS新聞","Url":"http://220.134.196.147:8542/http/61.219.99.20:8081/hls/75/817/ch59.m3u8"},
@@ -3614,5 +3614,6 @@
 {"Id":"29","Num":"29","Name":"河北音乐","Url":"https://lhttp.qingting.fm/live/1649/64k.mp3"},
 {"Id":"30","Num":"30","Name":"浙江音乐","Url":"https://lhttp.qingting.fm/live/4866/64k.mp3"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
+
 
 
