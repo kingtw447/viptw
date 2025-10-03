@@ -56,7 +56,7 @@
 {"Id":"55","Num":"55","Name":"TVBS新聞","Url":"http://220.134.196.147:8542/http/61.219.99.20:8081/hls/75/817/ch59.m3u8"},
 {"Id":"56","Num":"56","Name":"TVBS","Url":"http://220.134.196.147:8570/http/61.219.99.20:8081/hls/75/817/ch58.m3u8"},
 {"Id":"57","Num":"57","Name":"東森財經新聞","Url":"http://210.209.16.242:8077/live_cable/cable54.stream/chunklist.m3u8"},
-{"Id":"58","Num":"58","Name":"鏡電視新聞","Url":"http://210.209.16.242:8077/live_dtv/CH15.stream/chunklist.m3u8"},
+{"Id":"58","Num":"58","Name":"鏡電視新聞","Url":"http://tv543.cc/litv.php?token=leifeng&id=4gtv-4gtv07"},
 {"Id":"59","Num":"59","Name":"靖天映畫","Url":"http://210.209.16.242:8077/live_4gtv/4gtv23.stream/chunklist.m3u8"},
 {"Id":"60","Num":"60","Name":"靖天電影","Url":"http://210.209.16.242:8077/live_4gtv/4gtv21.stream/chunklist.m3u8"},
 {"Id":"61","Num":"61","Name":"采昌影劇","Url":"http://210.209.16.242:8077/live_4gtv/4gtv48.stream/chunklist.m3u8"},
@@ -3614,3 +3614,4 @@
 {"Id":"29","Num":"29","Name":"河北音乐","Url":"https://lhttp.qingting.fm/live/1649/64k.mp3"},
 {"Id":"30","Num":"30","Name":"浙江音乐","Url":"https://lhttp.qingting.fm/live/4866/64k.mp3"}
 ]}],"IsTrial":false,"Token":"","OLServer":"","ForceOnLine":false}
+
